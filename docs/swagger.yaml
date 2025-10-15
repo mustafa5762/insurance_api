@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: Car Quote Demo
+  version: 1.0.0
+  description: Demo API for Insurance - Cascading Dropdowns + Registration
+servers:
+  - url: http://localhost:3000/api
+paths:
+  /makes:
+    get:
+      summary: Get all car makes
+      responses:
+        '200':
+          description: List of makes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  data: { type: array, items: { type: object, properties: { name: { type: string } } } }
+  
+  /models/{makeId}:
+    get:
+      summary: Get models by make
+      parameters:
+        - name: makeId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: List of models
+  
+  /variants/{modelId}:
+    get:
+      summary: Get variants by model (NAMES ONLY)
+      parameters:
+        - name: modelId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: List of variant names
+  
+  /variant-spec/{variantId}:
+    get:
+      summary: Get specs for selected variant
+      parameters:
+        - name: variantId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Vehicle specifications
+  
+  /rto-codes:
+    get:
+      summary: Get all RTO codes
+      responses:
+        '200':
+          description: List of RTO codes
+  
+  /cities/{rtoCodeId}:
+    get:
+      summary: Get cities by RTO code
+      parameters:
+        - name: rtoCodeId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: List of cities
+  
+  /insurers:
+    get:
+      summary: Get all insurers
+      responses:
+        '200':
+          description: List of insurers
+  
+  /register:
+    post:
+      summary: Register a car
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                make: { type: string }
+                model: { type: string }
+                variant: { type: string }
+                city: { type: string }
+                registration_date: { type: string, format: date-time }
+                make_year: { type: number }
+                is_used: { type: boolean }
+                pyp_expiry: { type: string, format: date-time }
+                claims_in_pyp: { type: number }
+                previous_insurer: { type: string }
+      responses:
+        '201':
+          description: Car registered successfully
