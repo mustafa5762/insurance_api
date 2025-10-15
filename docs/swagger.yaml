@@ -105,3 +105,30 @@ paths:
       responses:
         '201':
           description: Car registered successfully
+  /registrations:
+    get:
+      summary: Get all registrations with filters
+      parameters:
+        - name: make
+          in: query
+          schema: { type: integer }
+          description: Filter by Make ID
+        - name: city
+          in: query  
+          schema: { type: integer }
+          description: Filter by City ID
+        - name: startDate
+          in: query
+          schema: { type: string, format: date }
+          description: From date (YYYY-MM-DD)
+        - name: endDate
+          in: query
+          schema: { type: string, format: date }
+          description: To date (YYYY-MM-DD)
+        - name: isUsed
+          in: query
+          schema: { type: boolean }
+          description: true=Used, false=New
+      responses:
+        '200':
+          description: Filtered registrations

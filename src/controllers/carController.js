@@ -82,6 +82,20 @@ class CarController {
       res.status(500).json({ success: false, error: error.message });
     }
   }
+
+  static async getRegistrations(req, res) {
+    try {
+      const filters = req.query; // ?make=1&city=2&startDate=2023-01-01
+      const registrations = await CarService.getRegistrations(filters);
+      res.json({ 
+        success: true, 
+        count: registrations.length,
+        data: registrations 
+      });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  }
 }
 
 module.exports = CarController;

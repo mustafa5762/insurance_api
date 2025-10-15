@@ -11,6 +11,7 @@ router.get('/variant-spec/:variantId', CarController.getVariantSpec);
 router.get('/rto-codes', CarController.getRTOCodes);
 router.get('/cities/:rtoCodeId', CarController.getCities);
 router.get('/insurers', CarController.getInsurers);
+router.get('/registrations', CarController.getRegistrations);
 
 router.post('/register', validate(schemas.register), CarController.registerCar);
 

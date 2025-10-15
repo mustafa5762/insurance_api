@@ -51,6 +51,50 @@ class CarService {
 
     return await registration.save();
   }
+
+  // ADD THIS METHOD (at bottom, before module.exports)
+  static async getRegistrations(filters = {}) {
+    const { make, city, startDate, endDate, isUsed } = filters;
+    
+    let whereClause = {};
+    
+    // Filter by Make
+    if (make) {
+      whereClause.makeId = make;
+    }
+    
+    // Filter by City  
+    if (city) {
+      whereClause.cityId = city;
+    }
+    
+    // Filter by Date Range
+    if (startDate || endDate) {
+      whereClause.registration_date = {};
+      if (startDate) whereClause.registration_date[Op.gte] = startDate;
+      if (endDate) whereClause.registration_date[Op.lte] = endDate;
+    }
+    
+    // Filter by Used/New
+    if (isUsed !== undefined) {
+      whereClause.is_used = isUsed;
+    }
+    
+    // Include related data (Make, Model, City names)
+    const registrations = await Registration.findAll({
+      where: whereClause,
+      include: [
+        { model: Make, attributes: ['name'] },
+        { model: ModelCar, attributes: ['name'] },
+        { model: Variant, attributes: ['name'] },
+        { model: City, attributes: ['name'] },
+        { model: Insurer, attributes: ['name'] }
+      ],
+      order: [['registration_date', 'DESC']]
+    });
+    
+    return registrations;
+  }
 }
 
 module.exports = CarService;
