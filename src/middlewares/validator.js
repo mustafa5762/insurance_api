@@ -5,6 +5,7 @@ const schemas = {
     make: Joi.string().required(),
     model: Joi.string().required(),
     variant: Joi.string().required(),
+    rtoCode: Joi.string().required(), // ✅ NEW!
     city: Joi.string().required(),
     registration_date: Joi.date().required(),
     make_year: Joi.number().integer().min(1900).max(2025).required(),
