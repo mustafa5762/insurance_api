@@ -97,6 +97,10 @@ paths:
                 variant: { type: string }
                 rtoCode: { type: string }
                 city: { type: string }
+                fuel_type: { type: string }
+                fuel_capacity: { type: number }
+                seating_capacity: { type: number }
+                transmission_type: { type: string }
                 registration_date: { type: string, format: date-time }
                 make_year: { type: number }
                 is_used: { type: boolean }

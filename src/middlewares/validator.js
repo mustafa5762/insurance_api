@@ -5,14 +5,18 @@ const schemas = {
     make: Joi.string().required(),
     model: Joi.string().required(),
     variant: Joi.string().required(),
-    rtoCode: Joi.string().required(), // ✅ NEW!
+    rtoCode: Joi.string().required(), 
     city: Joi.string().required(),
     registration_date: Joi.date().required(),
     make_year: Joi.number().integer().min(1900).max(2025).required(),
     is_used: Joi.boolean().required(),
     pyp_expiry: Joi.date().optional(),
     claims_in_pyp: Joi.number().integer().min(0).optional(),
-    previous_insurer: Joi.string().optional()
+    previous_insurer: Joi.string().optional(),
+    fuel_type: Joi.string().required(),
+    fuel_capacity: Joi.number().required(),
+    seating_capacity: Joi.number().required(),
+    transmission_type: Joi.string().required()
   })
 };
 
