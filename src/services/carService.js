@@ -54,25 +54,24 @@ class CarService {
   }
 
   static async getRegistrations(filters = {}) {
-    const { make, city, startDate, endDate, isUsed } = filters;
+    const { make, rtoCode, city, startDate, endDate, isUsed } = filters;
     
     let whereClause = {};
     
     // Filter by Make
-    if (make) {
-      whereClause.makeId = make;
-    }
+    if (make) whereClause.make = make;
     
-    // Filter by City  
-    if (city) {
-      whereClause.cityId = city;
-    }
+    // Filter by RTO Code  
+    if (rtoCode) whereClause.rtoCode = rtoCode;
+    
+    // Filter by City
+    if (city) whereClause.city = city;
     
     // Filter by Date Range
     if (startDate || endDate) {
       whereClause.registration_date = {};
-      if (startDate) whereClause.registration_date[Op.gte] = startDate;
-      if (endDate) whereClause.registration_date[Op.lte] = endDate;
+      if (startDate) whereClause.registration_date.$gte = new Date(startDate);
+      if (endDate) whereClause.registration_date.$lte = new Date(endDate);
     }
     
     // Filter by Used/New
@@ -80,19 +79,16 @@ class CarService {
       whereClause.is_used = isUsed;
     }
     
-    // Include related data (Make, Model, City names)
-    const registrations = await Registration.findAll({
-      where: whereClause,
-      include: [
-        { model: Make, attributes: ['name'] },
-        { model: ModelCar, attributes: ['name'] },
-        { model: Variant, attributes: ['name'] },
-        { model: City, attributes: ['name'] },
-        { model: Insurer, attributes: ['name'] }
-      ],
-      order: [['registration_date', 'DESC']]
-    });
-    
+    // MONGODB: find() + populate()
+    const registrations = await Registration.find(whereClause)
+      .populate('make', 'name')
+      .populate('model', 'name')
+      .populate('variant', 'name')
+      .populate('rtoCode', 'code')
+      .populate('city', 'name')
+      .populate('previous_insurer', 'name')
+      .sort({ registration_date: -1 });
+      
     return registrations;
   }
 }

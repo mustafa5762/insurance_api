@@ -1,3 +1,4 @@
+const Registration = require('../models/Registration');
 const CarService = require('../services/carService');
 
 class CarController {
