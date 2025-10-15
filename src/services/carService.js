@@ -43,16 +43,16 @@ class CarService {
     
     const registration = new Registration({
       ...data,
-      fuel_type: variantSpecs.fuel_type,
-      fuel_capacity: variantSpecs.fuel_capacity,
-      seating_capacity: variantSpecs.seating_capacity,
-      transmission_type: variantSpecs.transmission_type
+      rtoCode: data.rtoCode,
+      fuel_type: data.fuel_type,
+      fuel_capacity: data.fuel_capacity,
+      seating_capacity: data.seating_capacity,
+      transmission_type: data.transmission_type
     });
 
     return await registration.save();
   }
 
-  // ADD THIS METHOD (at bottom, before module.exports)
   static async getRegistrations(filters = {}) {
     const { make, city, startDate, endDate, isUsed } = filters;
     

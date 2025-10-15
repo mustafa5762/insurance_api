@@ -95,6 +95,7 @@ paths:
                 make: { type: string }
                 model: { type: string }
                 variant: { type: string }
+                rtoCode: { type: string }
                 city: { type: string }
                 registration_date: { type: string, format: date-time }
                 make_year: { type: number }

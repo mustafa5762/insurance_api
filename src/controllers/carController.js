@@ -73,10 +73,12 @@ class CarController {
   static async registerCar(req, res) {
     try {
       const registration = await CarService.registerCar(req.body);
+      const populated = await Registration.findById(registration._id)
+        .populate('make model variant rtoCode city previous_insurer'); // ✅ rtoCode!
       res.status(201).json({ 
         success: true, 
         message: 'Car registered successfully!', 
-        data: registration 
+        data: populated 
       });
     } catch (error) {
       res.status(500).json({ success: false, error: error.message });
