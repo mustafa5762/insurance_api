@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: Demo API for Insurance - Cascading Dropdowns + Registration
 servers:
-  - url: http://localhost:3000/api
+  - url: https://apidemo.pricedukaan.com/api
 paths:
   /makes:
     get:

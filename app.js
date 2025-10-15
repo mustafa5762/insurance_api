@@ -34,8 +34,8 @@ app.use(errorHandler);
 // Health check
 app.get('/', (req, res) => {
   res.json({ 
-    message: '🚗 Car Registration API v1.0', 
-    docs: 'http://localhost:3000/api-docs',
+    message: 'Car Quote API v1.0', 
+    docs: 'https://apidemo.pricedukaan.com/api-docs',
     endpoints: '/api/makes, /api/register, etc.'
   });
 });
